@@ -3,12 +3,10 @@
 html, body { height: 100%; margin: 0; background: #efece0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
 #app { display: grid; grid-template-rows: 1fr auto; min-height: 100vh; }
 #screen { position: relative; margin: 0 auto; max-width: min(1280px, 96vw); width: 100%; }
-#ratio-box { position: relative; width: 100%; }
+#ratio-box { position: relative; width: 100%; min-height: 60vh; } /* safety height so it never starts at 0 */
 #stage { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .hot { fill: transparent; stroke: transparent; pointer-events: all; }
 .hot:hover { stroke: var(--hover-border); stroke-width: 3; filter: drop-shadow(0 0 6px var(--hover-shadow)); cursor: pointer; }
 #quickbar { display: flex; gap: .5rem; justify-content: center; align-items: center; padding: .5rem 1rem 1rem; flex-wrap: wrap; }
 #quickbar button { padding: .5rem .8rem; border: 1px solid #c9c9c9; border-radius: 10px; background: white; cursor: pointer; }
 #quickbar button:hover { background: #f1f1f1; }
-dialog { border: none; border-radius: 12px; padding: 1rem 1.2rem; box-shadow: 0 12px 30px rgba(0,0,0,.35); }
-dialog::backdrop { background: rgba(0,0,0,.35); }
