@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Alignment Puzzle – mockup</title>
+  <link rel="preload" href="assets/Start.png" as="image">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <div id="screen">
+      <div id="ratio-box">
+        <svg id="stage" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Alignment Puzzle">
+          <image id="stage-img" href="assets/Start.png" x="0" y="0" width="100%" height="100%" preserveAspectRatio="xMidYMid meet"></image>
+          <g id="hotspot-layer"></g>
+        </svg>
+      </div>
+    </div>
+
+    <nav id="quickbar" aria-label="Hoofdnavigatie">
+      <button data-go="Start.png">Start</button>
+      <button data-go="Strategy.png">Strategy</button>
+      <button data-go="Process.png">Process</button>
+      <button data-go="Control.png">Control</button>
+      <button data-go="Information.png">Information</button>
+    </nav>
+  </div>
+
+  <dialog id="modal">
+    <h3>Not implemented yet</h3>
+    <p>This section will be added in a later version.</p>
+    <form method="dialog">
+      <button>OK</button>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
