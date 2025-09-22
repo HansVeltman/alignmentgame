@@ -17,11 +17,11 @@ const hotspots = {"Start.png":
                   "logo": [0, 0, 33.578125, 6.517006802721091]
                  }, 
                  "Process.png": 
-                 {"strategy": [85, 12, 90, 17], 
-                  "process":  [91, 7, 99, 17], 
-                  "control":  [84, 19, 95, 25], 
-                  "organization": [84, 25, 90, 30], 
-                  "information": [88, 26, 94, 30], 
+                 {"strategy":     [84, 13, 90, 19], 
+                  "process":      [91,  7, 99, 17], 
+                  "control":      [84, 19, 95, 26], 
+                  "organization": [84, 26, 90, 32], 
+                  "information":  [91, 26, 95, 32], 
                   "logo": [0, 0, 30, 7]
                  }, 
                  "Control.png": 
