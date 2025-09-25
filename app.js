@@ -15,7 +15,7 @@ const hotspots = {"Start.png":
                  "organization": [80.20,	31.20, 88.17,	41.30], 
                  "information":  [88.17,	31.20, 96.14,	41.30], 
                  "logo": [1, 1, 30, 7]
-                 }. 
+                 },
                  "Process.png": 
                 {"strategy":     [80.20,	11.48, 88.17,	20.93], 
                  "process":      [88.17,	11.48, 96.14,	20.93], 
@@ -23,7 +23,7 @@ const hotspots = {"Start.png":
                  "organization": [80.20,	31.20, 88.17,	41.30], 
                  "information":  [88.17,	31.20, 96.14,	41.30], 
                  "logo": [1, 1, 30, 7]
-                 }. 
+                 }, 
                  "Control.png": 
                  {"strategy": [86.921875, 2.4105231689088193, 92.929375, 11.489058295964123], 
                   "process": [93.32, 2.56, 99.63999999999999, 11.937488789237666], 
@@ -47,7 +47,7 @@ const hotspots = {"Start.png":
                  "organization": [80.20,	31.20, 88.17,	41.30], 
                  "information":  [88.17,	31.20, 96.14,	41.30], 
                  "logo": [1, 1, 30, 7]
-                 }. 
+                 },
                 };
 
 const keys = ["strategy","process","control","information","organization","logo"];
