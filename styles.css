@@ -13,5 +13,5 @@ html, body { height: 100%; margin: 0; background: #efece0; font-family: system-u
 
 /* --- UI overlay for interactive controls --- */
 #ui-overlay { position: absolute; inset: 0; pointer-events: none; }
-#ui-overlay select.ui-select { position: absolute; pointer-events: auto; font-size: 10px; padding: 0px 3px; }  /* was 1px 4px */
+#ui-overlay select.ui-select { position: absolute; pointer-events: auto; font-size: 10px; padding: 0px 2px; }  /* was 1px 4px */
 #ui-overlay select.ui-select:focus { outline: 2px solid #2b6cb0; outline-offset: 1px; }
