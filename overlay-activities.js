@@ -4,8 +4,8 @@
 
   const ORG_NAT_W = 2020, ORG_NAT_H = 1080;
   const VOFF_PERSON = 0;     // px offset for PersonResponsible
-  const VOFF_MEASURE = 20;   // px below the person select
-  const VOFF_BONUS = 40;     // px below the person select
+  const VOFF_MEASURE = 18;   // px below the person select
+  const VOFF_BONUS = 36;     // px below the person select
 
   const activities = [
     { key: "Act_Purchase",           label: "Act_Purchase",           xPx: 203,  yPx: 202,  props: {} },
