@@ -8,17 +8,17 @@
   const VOFF_BONUS = 32;     // px below the person select
 
   const activities = [
-    { key: "Act_Purchase",           label: "Act_Purchase",           xPx: 203,  yPx: 202,  props: {} },
-    { key: "Act_MakePlanning",       label: "Act_MakePlanning",       xPx: 871,  yPx: 202,  props: {} },
-    { key: "Act_MakeForecast",       label: "Act_MakeForecast",       xPx: 1173, yPx: 202,  props: {} },
-    { key: "Act_PromoteProducts",    label: "Act_PromoteProducts",    xPx: 1478, yPx: 202,  props: {} },
-    { key: "Act_SellProduct",        label: "Act_SellProduct",        xPx: 1173, yPx: 309,  props: {} },
-    { key: "Act_PromiseOnCustOrder", label: "Act_PromiseOnCustOrder", xPx: 1173, yPx: 408,  props: {} },
-    { key: "Act_ManufactWheels",     label: "Act_ManufactWheels",     xPx: 524,  yPx: 465,  props: {} },
-    { key: "Act_ManufactFrames",     label: "Act_ManufactFrames",     xPx: 524,  yPx: 600,  props: {} },
-    { key: "Act_AssembleProds",      label: "Act_AssembleProds",      xPx: 871,  yPx: 600,  props: {} },
-    { key: "Act_DistributeProds",    label: "Act_DistributeProds",    xPx: 1173, yPx: 600,  props: {} },
-    { key: "Act_ManageCash",         label: "Act_ManageCash",         xPx: 871,  yPx: 808,  props: {} },
+    { key: "Act_Purchase",           label: "Act_Purchase",           xPx: 139,  yPx: 164,  props: {} },
+    { key: "Act_MakePlanning",       label: "Act_MakePlanning",       xPx: 774,  yPx: 164,  props: {} },
+    { key: "Act_PromoteProducts",    label: "Act_PromoteProducts",    xPx: 1130, yPx: 164,  props: {} },
+    { key: "Act_MakeForecast",       label: "Act_MakeForecast",       xPx: 1130, yPx: 262,  props: {} },
+    { key: "Act_SellProduct",        label: "Act_SellProduct",        xPx: 1130, yPx: 365,  props: {} },
+    { key: "Act_PromiseOnCustOrder", label: "Act_PromiseOnCustOrder", xPx: 1130, yPx: 463,  props: {} },
+    { key: "Act_ManufactWheels",     label: "Act_ManufactWheels",     xPx: 384,  yPx: 434,  props: {} },
+    { key: "Act_ManufactFrames",     label: "Act_ManufactFrames",     xPx: 384,  yPx: 565,  props: {} },
+    { key: "Act_AssembleProds",      label: "Act_AssembleProds",      xPx: 774,  yPx: 565,  props: {} },
+    { key: "Act_DistributeProds",    label: "Act_DistributeProds",    xPx: 1131, yPx: 565,  props: {} },
+    { key: "Act_ManageCash",         label: "Act_ManageCash",         xPx: 774,  yPx: 772,  props: {} },
   ];
 
   const STORAGE_KEY = "activityAssignments_v2";
@@ -68,18 +68,18 @@
 
   function optionsPerson() {
     return [
-      { value: "", label: "- Person Responsible -", disabled: true },
+      { value: "", label: "- Manager -", disabled: true },
       { value: "Graeme (CEO)", label: "Graeme (CEO)" },
-      { value: "Michelle (VP)", label: "Michelle (VP)" },
-      { value: "George (VP)", label: "George (VP)" },
-      { value: "Peter (VP)", label: "Peter (VP)" },
-      { value: "Betty (VP)", label: "Betty (VP)" },
+      { value: "Michelle", label: "Michelle" },
+      { value: "George", label: "George" },
+      { value: "Peter", label: "Peter" },
+      { value: "Betty", label: "Betty" },
     ];
   }
 
   function optionsMeasurement() {
     return [
-      { value: "", label: "-Performance measure-", disabled: true },
+      { value: "", label: "-Perf. measure-", disabled: true },
       { value: "100% Cost budget", label: "100% Cost budget" },
       { value: "75% Cost, 25% Result", label: "75% Cost, 25% Result" },
       { value: "50% Cost, 50% Result", label: "50% Cost, 50% Result" },
