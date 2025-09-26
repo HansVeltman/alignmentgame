@@ -79,7 +79,7 @@
 
   function optionsMeasurement() {
     return [
-      { value: "", label: "–Performance measure–", disabled: true },
+      { value: "", label: "-Performance measure-", disabled: true },
       { value: "100% Cost budget", label: "100% Cost budget" },
       { value: "75% Cost, 25% Result", label: "75% Cost, 25% Result" },
       { value: "50% Cost, 50% Result", label: "50% Cost, 50% Result" },
@@ -92,7 +92,7 @@
 
   function optionsBonus() {
     return [
-      { value: "", label: "– Bonus impact –", disabled: true },
+      { value: "", label: "- Bonus impact -", disabled: true },
       { value: "Super bonus", label: "Super bonus" },
       { value: "Strong bonus", label: "Strong bonus" },
       { value: "Medium bonus", label: "Medium bonus" },
