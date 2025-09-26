@@ -176,34 +176,34 @@ function renderDropdowns(imageName) {
 function repositionDropdowns() {
   if (!uiOverlay) return;
   const stage = document.getElementById('stage');
+  const ratioBox = document.getElementById('ratio-box');
   const stageRect = stage.getBoundingClientRect();
+  const boxRect = ratioBox.getBoundingClientRect();
 
-  // The image's natural size (baseline)
   const NAT_W = 2020, NAT_H = 1080;
-
-  // Compute how the image is letterboxed inside the stage (preserveAspectRatio="xMidYMid meet")
   const scale = Math.min(stageRect.width / NAT_W, stageRect.height / NAT_H);
   const imgW = NAT_W * scale;
   const imgH = NAT_H * scale;
-  const imgLeft = stageRect.left + (stageRect.width - imgW) / 2;
-  const imgTop  = stageRect.top  + (stageRect.height - imgH) / 2;
 
-  // Overlay follows the actual displayed image box, not the whole stage
+  const imgLeftAbs = stageRect.left + (stageRect.width - imgW) / 2;
+  const imgTopAbs  = stageRect.top  + (stageRect.height - imgH) / 2;
+
+  const imgLeft = imgLeftAbs - boxRect.left;
+  const imgTop  = imgTopAbs  - boxRect.top;
+
   uiOverlay.style.left = imgLeft + 'px';
   uiOverlay.style.top = imgTop + 'px';
   uiOverlay.style.width = imgW + 'px';
   uiOverlay.style.height = imgH + 'px';
 
-  // Position each select using percentage coordinates relative to the image box
   uiOverlay.querySelectorAll('select.ui-select').forEach(sel => {
     const xPct = parseFloat(sel.getAttribute('data-xpct'));
     const yPct = parseFloat(sel.getAttribute('data-ypct'));
-    const left = (xPct / 100) * imgW;
-    const top = (yPct / 100) * imgH;
-    sel.style.left = left + 'px';
-    sel.style.top = top + 'px';
+    sel.style.left = (xPct / 100) * imgW + 'px';
+    sel.style.top  = (yPct / 100) * imgH + 'px';
   });
 }
+
 
 // Hook into screen changes without rewriting existing setScreen
 (function wrapSetScreen() {
