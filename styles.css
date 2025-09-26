@@ -19,6 +19,6 @@ html, body { height: 100%; margin: 0; background: #efece0; font-family: system-u
 #ui-overlay select.ui-select{
   box-sizing: border-box;
   white-space: nowrap;
-  width: 135px;        /* kies wat past */
+  width: 132px;        /* kies wat past */
 }
 
