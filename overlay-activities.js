@@ -4,8 +4,8 @@
 
   const ORG_NAT_W = 2020, ORG_NAT_H = 1080;
   const VOFF_PERSON = 0;     // px offset for PersonResponsible
-  const VOFF_MEASURE = 22;   // px below the person select
-  const VOFF_BONUS = 44;     // px below the person select
+  const VOFF_MEASURE = 20;   // px below the person select
+  const VOFF_BONUS = 40;     // px below the person select
 
   const activities = [
     { key: "Act_Purchase",           label: "Act_Purchase",           xPx: 203,  yPx: 202,  props: {} },
@@ -79,7 +79,7 @@
 
   function optionsMeasurement() {
     return [
-      { value: "", label: "— Performance measurement —", disabled: true },
+      { value: "", label: "– Performance measurement –", disabled: true },
       { value: "100% Cost budget", label: "100% Cost budget" },
       { value: "75% Cost, 25% Result", label: "75% Cost, 25% Result" },
       { value: "50% Cost, 50% Result", label: "50% Cost, 50% Result" },
@@ -92,7 +92,7 @@
 
   function optionsBonus() {
     return [
-      { value: "", label: "— Bonus impact —", disabled: true },
+      { value: "", label: "– Bonus impact –", disabled: true },
       { value: "Super bonus", label: "Super bonus" },
       { value: "Strong bonus", label: "Strong bonus" },
       { value: "Medium bonus", label: "Medium bonus" },
