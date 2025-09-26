@@ -110,6 +110,7 @@ function setupUI() {
 
 window.addEventListener('DOMContentLoaded', () => { setupUI(); setScreen('Start.png'); });
 
+
 // === Overlay dropdowns for Organization screen ===
 
 // Define dropdown positions in percentages relative to the full image (2020x1080 baseline).
@@ -117,7 +118,6 @@ const dropdownConfig = {
   "Organization.png": [
     // Example dropdown at [203, 202]px => [10.05%, 18.70%]
     { xPct: 10.05, yPct: 18.70 }
-    // Add more blocks here as { xPct: ..., yPct: ... }
   ]
 };
 
@@ -176,18 +176,30 @@ function renderDropdowns(imageName) {
 function repositionDropdowns() {
   if (!uiOverlay) return;
   const stage = document.getElementById('stage');
-  const rect = stage.getBoundingClientRect();
-  uiOverlay.style.left = rect.left + 'px';
-  uiOverlay.style.top = rect.top + 'px';
-  uiOverlay.style.width = rect.width + 'px';
-  uiOverlay.style.height = rect.height + 'px';
+  const stageRect = stage.getBoundingClientRect();
 
-  // Position each select using percentage coordinates
+  // The image's natural size (baseline)
+  const NAT_W = 2020, NAT_H = 1080;
+
+  // Compute how the image is letterboxed inside the stage (preserveAspectRatio="xMidYMid meet")
+  const scale = Math.min(stageRect.width / NAT_W, stageRect.height / NAT_H);
+  const imgW = NAT_W * scale;
+  const imgH = NAT_H * scale;
+  const imgLeft = stageRect.left + (stageRect.width - imgW) / 2;
+  const imgTop  = stageRect.top  + (stageRect.height - imgH) / 2;
+
+  // Overlay follows the actual displayed image box, not the whole stage
+  uiOverlay.style.left = imgLeft + 'px';
+  uiOverlay.style.top = imgTop + 'px';
+  uiOverlay.style.width = imgW + 'px';
+  uiOverlay.style.height = imgH + 'px';
+
+  // Position each select using percentage coordinates relative to the image box
   uiOverlay.querySelectorAll('select.ui-select').forEach(sel => {
     const xPct = parseFloat(sel.getAttribute('data-xpct'));
     const yPct = parseFloat(sel.getAttribute('data-ypct'));
-    const left = (xPct / 100) * rect.width;
-    const top = (yPct / 100) * rect.height;
+    const left = (xPct / 100) * imgW;
+    const top = (yPct / 100) * imgH;
     sel.style.left = left + 'px';
     sel.style.top = top + 'px';
   });
@@ -217,7 +229,5 @@ function repositionDropdowns() {
 
 // Render once on initial load (after the app sets Start.png)
 window.addEventListener('DOMContentLoaded', () => {
-  // Re-render on hash or other state changes if needed
   renderDropdowns(document.getElementById('stage-img')?.getAttribute('href')?.split('/').pop());
 });
-
