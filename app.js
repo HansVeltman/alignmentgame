@@ -109,3 +109,115 @@ function setupUI() {
 }
 
 window.addEventListener('DOMContentLoaded', () => { setupUI(); setScreen('Start.png'); });
+
+// === Overlay dropdowns for Organization screen ===
+
+// Define dropdown positions in percentages relative to the full image (2020x1080 baseline).
+const dropdownConfig = {
+  "Organization.png": [
+    // Example dropdown at [203, 202]px => [10.05%, 18.70%]
+    { xPct: 10.05, yPct: 18.70 }
+    // Add more blocks here as { xPct: ..., yPct: ... }
+  ]
+};
+
+// Create overlay container once
+let uiOverlay = null;
+function ensureOverlay() {
+  if (!uiOverlay) {
+    const ratioBox = document.getElementById('ratio-box');
+    uiOverlay = document.createElement('div');
+    uiOverlay.id = 'ui-overlay';
+    ratioBox.appendChild(uiOverlay);
+    window.addEventListener('resize', () => repositionDropdowns());
+  }
+  return uiOverlay;
+}
+
+function clearDropdowns() {
+  ensureOverlay();
+  uiOverlay.innerHTML = '';
+}
+
+function renderDropdowns(imageName) {
+  ensureOverlay();
+  clearDropdowns();
+  const conf = dropdownConfig[imageName];
+  if (!conf || !Array.isArray(conf)) return;
+
+  const options = [
+    { value: "", label: "- Person Responsible -", disabled: true, selected: true },
+    { value: "Graeme (CEO)", label: "Graeme (CEO)" },
+    { value: "Michelle (VP)", label: "Michelle (VP)" },
+    { value: "George (VP)", label: "George (VP)" },
+    { value: "Peter (VP)", label: "Peter (VP)" },
+    { value: "Betty (VP)", label: "Betty (VP)" },
+  ];
+
+  conf.forEach((pt, idx) => {
+    const sel = document.createElement('select');
+    sel.className = 'ui-select';
+    sel.setAttribute('data-xpct', pt.xPct);
+    sel.setAttribute('data-ypct', pt.yPct);
+    options.forEach(opt => {
+      const o = document.createElement('option');
+      o.value = opt.value;
+      o.textContent = opt.label;
+      if (opt.disabled) o.disabled = true;
+      if (opt.selected) o.selected = true;
+      sel.appendChild(o);
+    });
+    uiOverlay.appendChild(sel);
+  });
+
+  repositionDropdowns();
+}
+
+function repositionDropdowns() {
+  if (!uiOverlay) return;
+  const stage = document.getElementById('stage');
+  const rect = stage.getBoundingClientRect();
+  uiOverlay.style.left = rect.left + 'px';
+  uiOverlay.style.top = rect.top + 'px';
+  uiOverlay.style.width = rect.width + 'px';
+  uiOverlay.style.height = rect.height + 'px';
+
+  // Position each select using percentage coordinates
+  uiOverlay.querySelectorAll('select.ui-select').forEach(sel => {
+    const xPct = parseFloat(sel.getAttribute('data-xpct'));
+    const yPct = parseFloat(sel.getAttribute('data-ypct'));
+    const left = (xPct / 100) * rect.width;
+    const top = (yPct / 100) * rect.height;
+    sel.style.left = left + 'px';
+    sel.style.top = top + 'px';
+  });
+}
+
+// Hook into screen changes without rewriting existing setScreen
+(function wrapSetScreen() {
+  if (typeof setScreen === 'function') {
+    const _orig = setScreen;
+    window.setScreen = function(name) {
+      _orig(name);
+      renderDropdowns(name);
+    };
+  } else {
+    // If setScreen isn't defined yet, try again after DOM is ready
+    window.addEventListener('DOMContentLoaded', () => {
+      if (typeof setScreen === 'function') {
+        const _orig = setScreen;
+        window.setScreen = function(name) {
+          _orig(name);
+          renderDropdowns(name);
+        };
+      }
+    });
+  }
+})();
+
+// Render once on initial load (after the app sets Start.png)
+window.addEventListener('DOMContentLoaded', () => {
+  // Re-render on hash or other state changes if needed
+  renderDropdowns(document.getElementById('stage-img')?.getAttribute('href')?.split('/').pop());
+});
+
