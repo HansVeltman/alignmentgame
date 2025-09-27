@@ -109,3 +109,144 @@ function setupUI() {
 }
 
 window.addEventListener('DOMContentLoaded', () => { setupUI(); setScreen('Start.png'); });
+
+
+// === Top Menu (compact, percent-positioned, from baseline) ===
+(function installMenu() {
+  const MENU_POS = { x: 950, y: 4 }; // image-space pixels (relative to current image natW/natH)
+  const ratioBox = document.getElementById('ratio-box');
+  if (!ratioBox) return;
+
+  // Create container once
+  let menu = document.getElementById('menu-bar');
+  if (!menu) {
+    menu = document.createElement('div');
+    menu.id = 'menu-bar';
+    menu.innerHTML = `
+      <div class="bar" role="menubar" aria-label="Main menu">
+        <div class="root" data-root="user">
+          <button class="root-btn" aria-haspopup="true" aria-expanded="false">🧑‍💼 User Functions</button>
+          <div class="dd" role="menu">
+            <ul>
+              <li><button class="item" data-action="set-params"><span class="muted">Set params:</span> company (ao: position CODP) / activity</button></li>
+              <li><button class="item" data-action="report-activity">Report: activity</button></li>
+              <li><button class="item" data-action="report-company">Report: company</button></li>
+              <li><button class="item" data-action="report-game">Report: game</button></li>
+              <li><button class="item" data-action="report-system">Report: system</button></li>
+              <li><button class="item" data-action="snop-classic">S&OP: classic</button></li>
+              <li><button class="item" data-action="snop-acs">S&OP: ACS version</button></li>
+              <li><button class="item" data-action="decide-now">Decide now: Make quick decisions in an urgent crisis situation</button></li>
+            </ul>
+          </div>
+        </div>
+        <div class="root" data-root="admin">
+          <button class="root-btn" aria-haspopup="true" aria-expanded="false">🔧 Admin</button>
+          <div class="dd" role="menu">
+            <ul>
+              <li><button class="item" data-action="configure-game">Configure: game</button></li>
+              <li><button class="item" data-action="configure-company">Configure: company</button></li>
+              <li><button class="item" data-action="manage-users">Manage users</button></li>
+              <li><button class="item" data-action="run-day">Run: day</button></li>
+              <li><button class="item" data-action="run-week">Run: week</button></li>
+              <li><button class="item" data-action="run-month">Run: month</button></li>
+              <li><button class="item" data-action="run-year">Run: year</button></li>
+            </ul>
+          </div>
+        </div>
+        <div class="root" data-root="help">
+          <button class="root-btn" aria-haspopup="true" aria-expanded="false">❓ Help</button>
+          <div class="dd" role="menu">
+            <ul><li><button class="item" data-action="help">Open help</button></li></ul>
+          </div>
+        </div>
+        <div class="root" data-root="about">
+          <button class="root-btn" aria-haspopup="true" aria-expanded="false">ℹ️ About</button>
+          <div class="dd" role="menu">
+            <ul><li><button class="item" data-action="about">About The Alignment Game</button></li></ul>
+          </div>
+        </div>
+      </div>`;
+    ratioBox.appendChild(menu);
+
+    // Interaction: open/close
+    function closeAll() {
+      menu.querySelectorAll('.root').forEach(r => {
+        r.classList.remove('open');
+        const b = r.querySelector('.root-btn'); if (b) b.setAttribute('aria-expanded','false');
+      });
+    }
+    menu.addEventListener('click', (e) => {
+      const rootBtn = e.target.closest('.root-btn');
+      if (rootBtn) {
+        const root = rootBtn.closest('.root');
+        const isOpen = root.classList.contains('open');
+        closeAll();
+        root.classList.toggle('open', !isOpen);
+        rootBtn.setAttribute('aria-expanded', String(!isOpen));
+      }
+      const item = e.target.closest('.item');
+      if (item) {
+        const key = item.dataset.action;
+        dispatch(key);
+        closeAll();
+      }
+    });
+    document.addEventListener('click', (e) => { if (!menu.contains(e.target)) closeAll(); });
+
+    function dispatch(key) {
+      const actions = {
+        'set-params':        () => emit('setParams'),
+        'report-activity':   () => emit('report',  { scope: 'activity' }),
+        'report-company':    () => emit('report',  { scope: 'company' }),
+        'report-game':       () => emit('report',  { scope: 'game' }),
+        'report-system':     () => emit('report',  { scope: 'system' }),
+        'snop-classic':      () => emit('snop',    { variant: 'classic' }),
+        'snop-acs':          () => emit('snop',    { variant: 'acs' }),
+        'decide-now':        () => emit('decideNow'),
+        'configure-game':    () => emit('configure', { target: 'game' }),
+        'configure-company': () => emit('configure', { target: 'company' }),
+        'manage-users':      () => emit('manageUsers'),
+        'run-day':           () => emit('run', { horizon: 'day' }),
+        'run-week':          () => emit('run', { horizon: 'week' }),
+        'run-month':         () => emit('run', { horizon: 'month' }),
+        'run-year':          () => emit('run', { horizon: 'year' }),
+        'help':              () => emit('help'),
+        'about':             () => emit('about'),
+      };
+      (actions[key]||(()=>{}))();
+    }
+    function emit(action, payload={}) {
+      window.dispatchEvent(new CustomEvent('menu:action', { detail: { action, payload } }));
+    }
+  }
+
+  // Position using percentages so it follows the image size without shrinking UI
+  function positionMenu() {
+    if (!menu) return;
+    // natW/natH are maintained by app.js when images load.
+    // Guard against zero:
+    const w = (typeof natW === 'number' && natW > 0) ? natW : 1600;
+    const h = (typeof natH === 'number' && natH > 0) ? natH : 900;
+    const leftPct = (MENU_POS.x / w) * 100;
+    const topPct  = (MENU_POS.y / h) * 100;
+    menu.style.left = leftPct + '%';
+    menu.style.top  = topPct + '%';
+  }
+
+  // Re-position whenever screen changes or viewport resizes.
+  window.addEventListener('resize', positionMenu);
+
+  // Hook into setScreen so after image loads we re-place the menu.
+  const _setScreen = window.setScreen;
+  if (typeof _setScreen === 'function') {
+    window.setScreen = function(name) {
+      _setScreen(name);
+      // setScreen async loads the image; queue position after next frame
+      requestAnimationFrame(() => requestAnimationFrame(positionMenu));
+    };
+  } else {
+    // fallback initial placement
+    requestAnimationFrame(positionMenu);
+  }
+})();
+

@@ -22,3 +22,18 @@ html, body { height: 100%; margin: 0; background: #efece0; font-family: system-u
   width: 85px;        /* kies wat past */
 }
 
+
+/* === Compact Top Menubar (from baseline) === */
+#menu-bar { position: absolute; left: 0; top: 0; z-index: 20; pointer-events: auto; }
+#menu-bar .bar { display: inline-flex; gap: .25rem; padding: .2rem; background:#fff; border:1px solid #e6e6e6; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,.10); font-size:12px; }
+#menu-bar .root { position: relative; }
+#menu-bar .root-btn { display:inline-flex; align-items:center; gap:.35rem; padding:.3rem .55rem; border:1px solid #ececf2; background:#f8f9fd; border-radius:8px; font-weight:600; cursor:pointer; }
+#menu-bar .root-btn:hover, #menu-bar .root-btn:focus { background:#eef2ff; outline:none; }
+#menu-bar .dd { position:absolute; left:0; top:calc(100% + 6px); min-width:220px; max-width:340px; background:#fff; border:1px solid #e6e6e6; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,.12); padding:.25rem; display:none; }
+#menu-bar .root.open > .dd, #menu-bar .root:focus-within > .dd { display:block; }
+#menu-bar .dd ul { list-style:none; margin:0; padding:.1rem; }
+#menu-bar .dd li { margin:0; }
+#menu-bar .item { width:100%; text-align:left; display:block; padding:.38rem .5rem; background:transparent; border:0; border-radius:7px; cursor:pointer; }
+#menu-bar .item:hover, #menu-bar .item:focus { background:#f5f7ff; outline:none; }
+#menu-bar .muted { opacity:.85; font-weight:500; }
+
